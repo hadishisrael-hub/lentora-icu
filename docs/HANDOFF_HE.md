@@ -14,6 +14,12 @@
 - `Smoke.exe --verify-chart`, `--check-chart`, `--check-argyll`.
 - צילומי כל המסכים בשתי הערכות (נבדקו בעין; חלקם ב־`docs/screenshots`).
 
+## פרסום ציבורי (2026-10-26)
+- ריפו: https://github.com/hadishisrael-hub/lentora-icu (ציבורי). Release ‏`v0.5.0` כולל את קובץ ההתקנה, קובץ sha256 ו־`Argyll_V3.5.0_src.zip` (‏sha256 `f8576ce5589fd15620abb73ff049ea31f55ddbd1bba6d1ffa87452658e7bc85f`).
+- ההיסטוריה הציבורית התחילה מ־commit נקי אחד, בלי נתיבים מקומיים, בלי כתובת ה־IP של המדפסת ובלי כתובת הג׳ימייל. ההיסטוריה המקומית המלאה נשמרה בענף `history/private-2026-10`, שלא נדחף.
+- זהות ה־commit בריפו הזה: `hadishisrael-hub` עם כתובת ה־noreply של GitHub.
+- גרסה חדשה: commit ל־`main`, העלאת `<Version>`, הרצת `scripts/package.ps1`, ואז `gh release create vX.Y.Z` עם קובץ ההתקנה, קובץ ה־sha256 ומקור Argyll.
+
 ## 0.5.0 — עורך פרופיל (2026-10-26)
 - `ProfileEdit` (Core/ProfileEdit.cs): סט פרמטרים לכל מועמד, ביחידות Lab, שמתאר את השינוי הרצוי **בהדפסה**: כללי, טונים, איזון אפור ושמונה טווחי צבע סלקטיבי. `ProfileBuilder.ApplyEdit` מזיז את המודל בכיוון ההפוך.
 - כל מועמד נבנה מחדש מהסריקה, מהמשוב ומהעריכה. העריכה נשמרת ב־`Candidate.Edit`, וסשנים ישנים ממופים מ־`ManualTuning` (`EffectiveEdit`).
@@ -39,4 +45,3 @@
 - **בדיקה פיזית על נייר עדיין פתוחה** (מהדוח הקודם: C251i היה Offline).
 - אין סקריפט אריזה. בחבילה יש לצרף את `Argyll_V3.5.0` כולו לא משונה, כולל `License.txt`, וגם לצרף את `Argyll_V3.5.0_src.zip` לכל גרסה.
 - מסלול הצבע: ICU ממיר דרך WPF `ColorConvertedBitmap`, ואילו Lentora מדפיסה דרך lcms2 ו־GDI. צריך ליישר את rendering intent לפני שממליצים לעבוד עם שתיהן יחד.
-- הריפו מקומי בלבד. לא נוצר remote ולא פורסם דבר.
