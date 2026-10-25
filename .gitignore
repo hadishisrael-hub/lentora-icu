@@ -1,0 +1,9 @@
+**/bin/
+**/obj/
+.appdata/
+dist/
+portable-app/
+*.zip
+Argyll_V*/
+build/
+dist-local/

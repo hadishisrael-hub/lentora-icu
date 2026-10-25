@@ -1,0 +1,23 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <!-- Lentora shell tokens (app/src/brand/brand-ui.css, dim). -->
+    <SolidColorBrush x:Key="Bg" Color="#213542"/>
+    <SolidColorBrush x:Key="Panel" Color="#293E4B"/>
+    <SolidColorBrush x:Key="Panel2" Color="#354D5A"/>
+    <SolidColorBrush x:Key="Line" Color="#546B77"/>
+    <SolidColorBrush x:Key="Text" Color="#F5F8F8"/>
+    <SolidColorBrush x:Key="Muted" Color="#BFCCD3"/>
+    <SolidColorBrush x:Key="Accent" Color="#08708A"/>
+    <SolidColorBrush x:Key="AccentHover" Color="#0A819F"/>
+    <SolidColorBrush x:Key="AccentPressed" Color="#065C72"/>
+    <SolidColorBrush x:Key="AccentText" Color="#5ED3E6"/>
+    <SolidColorBrush x:Key="AccentSoft" Color="#3316B5CF"/>
+    <SolidColorBrush x:Key="OnAccent" Color="#FFFFFF"/>
+    <SolidColorBrush x:Key="Focus" Color="#16B5CF"/>
+    <SolidColorBrush x:Key="Danger" Color="#FF8FAE"/>
+    <SolidColorBrush x:Key="DangerSoft" Color="#33E92E67"/>
+    <SolidColorBrush x:Key="Success" Color="#7FDCAA"/>
+    <SolidColorBrush x:Key="SuccessSoft" Color="#2E3CB371"/>
+    <SolidColorBrush x:Key="Warning" Color="#FFD66F"/>
+    <SolidColorBrush x:Key="WarningSoft" Color="#26FFD66F"/>
+</ResourceDictionary>

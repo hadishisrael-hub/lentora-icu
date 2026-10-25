@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+    <Product>Lentora ICU</Product>
+    <Description>Printer color profiling from an office scanner and guided visual feedback.</Description>
+    <Copyright>Copyright (C) 2026 Daniel / Lentora. Licensed under AGPL-3.0-or-later.</Copyright>
+    <Version>0.5.0</Version>
+    <ApplicationIcon>Assets\Brand\icu.ico</ApplicationIcon>
+    <SatelliteResourceLanguages>en;he</SatelliteResourceLanguages>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="OpenCvSharp4" Version="4.10.0.20241108" />
+    <PackageReference Include="OpenCvSharp4.runtime.win" Version="4.10.0.20241108" />
+    <Resource Include="Assets\Reference.png" />
+    <Resource Include="Assets\Fonts\CalSans-Regular.ttf" />
+    <Resource Include="Assets\Brand\icu.ico" />
+    <Resource Include="Assets\Brand\icu-512.png" />
+    <Content Include="..\LICENSE" Link="LICENSE" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
+    <Content Include="..\TRADEMARKS.md" Link="TRADEMARKS.md" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
+    <Content Include="..\THIRD-PARTY-NOTICES.md" Link="THIRD-PARTY-NOTICES.md" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
+    <Content Include="Assets\CalibrationChart.png" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
+    <Content Include="Assets\Fonts\OFL-CalSans.txt" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
+  </ItemGroup>
+
+</Project>

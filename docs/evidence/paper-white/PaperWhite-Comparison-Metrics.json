@@ -1,0 +1,143 @@
+{
+  "source_scan": "scan.jpg",
+  "source_photo": "ChatGPT Image Sep 23, 2026, 12_24_10 AM.png",
+  "old_profile": "legacy-smoothing.icm",
+  "new_profile": "protected-smoothing.icc",
+  "new_profile_feedback": [
+    "banding"
+  ],
+  "protection_mode": "SmartGradient",
+  "color_difference": "CIEDE2000 in sRGB round-trip previews made by the WPF color-management path",
+  "files": {
+    "chart": "PaperWhiteTest.png",
+    "comparison": "PaperWhite-Comparison.png",
+    "no_profile_preview": "Preview-No-ICU-Profile.png",
+    "old_profile_preview": "Preview-Legacy-Profile.png",
+    "protected_profile_preview": "Preview-Protected-Profile.png"
+  },
+  "regions": {
+    "exact_white": {
+      "old_profile_vs_source": {
+        "samples": 1392,
+        "mean_delta_e_2000": 0.8240039632663452,
+        "p95_delta_e_2000": 0.8240039632663363,
+        "maximum_delta_e_2000": 0.8240039632663363
+      },
+      "protected_profile_vs_source": {
+        "samples": 1392,
+        "mean_delta_e_2000": 0.5026047781893047,
+        "p95_delta_e_2000": 0.5026047781893085,
+        "maximum_delta_e_2000": 0.5026047781893085
+      },
+      "old_vs_protected": {
+        "samples": 1392,
+        "mean_delta_e_2000": 0.534671416172312,
+        "p95_delta_e_2000": 0.5346714161723274,
+        "maximum_delta_e_2000": 0.5346714161723274
+      }
+    },
+    "neutral_highlights": {
+      "old_profile_vs_source": {
+        "samples": 5859,
+        "mean_delta_e_2000": 0.7139895470898271,
+        "p95_delta_e_2000": 1.1128263374457508,
+        "maximum_delta_e_2000": 2.887922545134417
+      },
+      "protected_profile_vs_source": {
+        "samples": 5859,
+        "mean_delta_e_2000": 0.7091513277158256,
+        "p95_delta_e_2000": 1.214907180916485,
+        "maximum_delta_e_2000": 2.7342590632067316
+      },
+      "old_vs_protected": {
+        "samples": 5859,
+        "mean_delta_e_2000": 0.5633804447888917,
+        "p95_delta_e_2000": 1.3426728730621849,
+        "maximum_delta_e_2000": 1.3426728730621849
+      }
+    },
+    "cream_tones": {
+      "old_profile_vs_source": {
+        "samples": 7830,
+        "mean_delta_e_2000": 1.2348514737816787,
+        "p95_delta_e_2000": 2.3070811031676546,
+        "maximum_delta_e_2000": 2.3070811031676546
+      },
+      "protected_profile_vs_source": {
+        "samples": 7830,
+        "mean_delta_e_2000": 1.1670579393331553,
+        "p95_delta_e_2000": 2.4940831434342505,
+        "maximum_delta_e_2000": 2.4940831434342505
+      },
+      "old_vs_protected": {
+        "samples": 7830,
+        "mean_delta_e_2000": 0.6675155654716334,
+        "p95_delta_e_2000": 1.453171244353627,
+        "maximum_delta_e_2000": 1.453171244353627
+      }
+    },
+    "highlight_gradients": {
+      "old_profile_vs_source": {
+        "samples": 14500,
+        "mean_delta_e_2000": 0.7849308241254142,
+        "p95_delta_e_2000": 1.255424186080353,
+        "maximum_delta_e_2000": 2.9061360975696346
+      },
+      "protected_profile_vs_source": {
+        "samples": 14500,
+        "mean_delta_e_2000": 0.7258240832533843,
+        "p95_delta_e_2000": 1.258213303081831,
+        "maximum_delta_e_2000": 3.8651345795150522
+      },
+      "old_vs_protected": {
+        "samples": 14500,
+        "mean_delta_e_2000": 0.5468052979137179,
+        "p95_delta_e_2000": 1.16074369353015,
+        "maximum_delta_e_2000": 1.6628802063608419
+      }
+    },
+    "photo_highlights": {
+      "old_profile_vs_source": {
+        "samples": 57420,
+        "mean_delta_e_2000": 1.6071097615743482,
+        "p95_delta_e_2000": 5.171661402897216,
+        "maximum_delta_e_2000": 9.837862999752202
+      },
+      "protected_profile_vs_source": {
+        "samples": 57420,
+        "mean_delta_e_2000": 1.5757186680819624,
+        "p95_delta_e_2000": 5.096206463920778,
+        "maximum_delta_e_2000": 9.932832421106518
+      },
+      "old_vs_protected": {
+        "samples": 57420,
+        "mean_delta_e_2000": 0.44612406408663,
+        "p95_delta_e_2000": 1.0305501247439441,
+        "maximum_delta_e_2000": 2.404431453039572
+      }
+    },
+    "whole_chart": {
+      "old_profile_vs_source": {
+        "samples": 136090,
+        "mean_delta_e_2000": 1.2589415680302982,
+        "p95_delta_e_2000": 4.045475280060866,
+        "maximum_delta_e_2000": 9.985092151947077
+      },
+      "protected_profile_vs_source": {
+        "samples": 136090,
+        "mean_delta_e_2000": 1.135650157020875,
+        "p95_delta_e_2000": 3.9923399747477797,
+        "maximum_delta_e_2000": 9.91938586679768
+      },
+      "old_vs_protected": {
+        "samples": 136090,
+        "mean_delta_e_2000": 0.501124162861987,
+        "p95_delta_e_2000": 1.0939464526959768,
+        "maximum_delta_e_2000": 2.566616389393455
+      }
+    }
+  },
+  "physical_printer": "KONICA MINOLTA bizhub C251i PCL UPD",
+  "physical_paper": "כרומו מט",
+  "physical_print_status": "Not measured: the selected C251i Windows queue currently reports Offline (status 128); no print job was submitted."
+}
