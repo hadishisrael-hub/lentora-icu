@@ -9,7 +9,7 @@
     <Product>Lentora ICU</Product>
     <Description>Printer color profiling from an office scanner and guided visual feedback.</Description>
     <Copyright>Copyright (C) 2026 Daniel / Lentora. Licensed under AGPL-3.0-or-later.</Copyright>
-    <Version>0.5.0</Version>
+    <Version>0.5.1</Version>
     <ApplicationIcon>Assets\Brand\icu.ico</ApplicationIcon>
     <SatelliteResourceLanguages>en;he</SatelliteResourceLanguages>
   </PropertyGroup>

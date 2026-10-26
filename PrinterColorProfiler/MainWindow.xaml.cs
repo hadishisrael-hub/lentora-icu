@@ -198,7 +198,7 @@ public partial class MainWindow : Window
     private Border ProfileCard(ProfileSession p)
     {
         string? tone = p.Status switch { "פעיל" => "Success", "דורש בדיקה" => "Danger", _ => null };
-        var badges = Row(Badge(p.Status, tone), Badge(p.Installed ? "מותקן ב־Windows" : "לא מותקן"), Badge($"{p.Candidates.Count} מועמדים"));
+        var badges = Row(Badge(p.Status, tone), Badge(p.Installed ? "מותקן ב־Windows" : "לא מותקן"), Badge($"{p.Candidates.Count} גרסאות"));
         var more = new Button { Content = "⋯", Style = (Style)FindResource("Icon"), ToolTip = "פעולות נוספות" };
         var menu = new ContextMenu { FlowDirection = FlowDirection.RightToLeft };
         void Item(string header, Action action) { var item = new MenuItem { Header = header }; item.Click += (_, _) => { try { action(); } catch (Exception ex) { Error(ex); } }; menu.Items.Add(item); }
@@ -206,9 +206,15 @@ public partial class MainWindow : Window
         if (p.Installed && p.Candidates.Count > 0)
             Item("הפעל שוב את הפרופיל במדפסת", () => { session = p; WindowsServices.InstallAndVerify(Current, Current.Candidates[Current.SelectedCandidate]); Current.Status = "ממתין לבדיקה אחרונה"; Store.Save(Current); FinalCheck(); });
         more.Click += (_, _) => { menu.PlacementTarget = more; menu.IsOpen = true; };
-
-        var actions = Row(Btn("המשך", () => { session = p; Resume(); }, Kind.Primary, "ממשיך מהשלב שבו עצרת"));
-        if (p.Candidates.Count > 0) actions.Children.Add(Btn("צור מועמד נוסף", () => EditExisting(p), Kind.Secondary, "טוען את סריקת הכיול המקורית ומאפשר לשפר בלי להדפיס דף מדידה חדש"));
+        var actions = Row();
+        if (p.Candidates.Count > 0)
+        {
+            actions.Children.Add(Btn("ערוך פרופיל", () => EditExisting(p, openEditor: true), Kind.Primary,
+                "פותח את הפרופיל לעריכת ערכים מדויקים ושמירה כגרסה מעודכנת. הגרסאות הקודמות נשמרות."));
+            actions.Children.Add(Btn("המשך", () => { session = p; Resume(); }, Kind.Secondary, "ממשיך מהשלב שבו עצרת"));
+            Item("שפר לפי מה שראית (משוב)", () => { EditExisting(p, openEditor: false); Feedback(); });
+        }
+        else actions.Children.Add(Btn("המשך", () => { session = p; Resume(); }, Kind.Primary, "ממשיך מהשלב שבו עצרת"));
         actions.Children.Add(more);
 
         var header = new DockPanel();
@@ -232,7 +238,7 @@ public partial class MainWindow : Window
             Process.Start(new ProcessStartInfo("explorer.exe", $"/select,\"{candidatePath}\"") { UseShellExecute = true });
         else OpenDirectory(profile.DirectoryPath);
     }
-    private void EditExisting(ProfileSession profile)
+    private void EditExisting(ProfileSession profile, bool openEditor)
     {
         session = profile;
         if (profile.Candidates.Count == 0) throw new InvalidOperationException("לפרופיל הזה עדיין אין מועמד ICC לעריכה.");
@@ -241,7 +247,7 @@ public partial class MainWindow : Window
         if (!File.Exists(profile.ScanPath))
             throw new InvalidOperationException("לעריכת הפרופיל דרושה סריקת הכיול המקורית, והיא לא נמצאה בתיקיית הפרופיל.");
         scan = ScanAnalyzer.Analyze(profile.ScanPath);
-        Review();
+        if (openEditor) Editor(); else Review();
     }
     private void Resume()
     {
@@ -441,7 +447,7 @@ public partial class MainWindow : Window
 
         var decision = Row(Btn("✓ נראה טוב — להמשיך", Ready, Kind.Primary),
             Btn("שפר לפי מה שראית", Feedback, Kind.Secondary, "בחירת בעיות מוכרות: כהה מדי, עור צהוב וכדומה"),
-            Btn("ערוך פרופיל", Editor, Kind.Secondary, "ערכים מדויקים: טונים, איזון אפור וצבע סלקטיבי"));
+            Btn("ערוך פרופיל", Editor, Kind.Secondary, "ערכים מדויקים: טונים, איזון אפור וצבע סלקטיבי. נשמר כגרסה חדשה"));
         if (Current.SelectedCandidate > 0)
             decision.Children.Add(Btn("נהיה גרוע יותר — חזור לקודם", () => { Current.SelectedCandidate--; Store.Save(Current); Review(); }, Kind.Ghost));
         decision.Children.Add(Btn("פרטים מתקדמים", AdvancedDetails, Kind.Ghost));
@@ -565,8 +571,21 @@ public partial class MainWindow : Window
     {
         var candidate = Current.Candidates[Current.SelectedCandidate];
         var original = candidate.EffectiveEdit;
-        Page($"עריכת פרופיל — מועמד {candidate.Number}", 5,
-            "כל ערך מתאר את השינוי שתראה בהדפסה. העריכה נשמרת כפרמטרים ונבנית מחדש מהסריקה המקורית, כך שאפשר לחזור אליה ולשנות.");
+        Page($"עריכת פרופיל — גרסה {candidate.Number}", 5,
+            "הערכים שמופיעים הם אלה ששמורים בגרסה הזו. שנה מה שרוצים ושמור כגרסה חדשה; הגרסה הנוכחית והקודמות נשארות כמו שהן.");
+        if (Current.Candidates.Count > 1)
+        {
+            var versions = new WrapPanel();
+            versions.Children.Add(new TextBlock { Text = "ערוך על בסיס:", VerticalAlignment = VerticalAlignment.Center, Margin = new Thickness(0, 0, 10, 8) });
+            foreach (var (c, index) in Current.Candidates.Select((c, i) => (c, i)))
+            {
+                var chip = new ToggleButton { Content = $"גרסה {c.Number}", Style = (Style)FindResource("Chip"), IsChecked = index == Current.SelectedCandidate,
+                    ToolTip = $"{c.CreatedAt:g}\n{EditSummary(c.EffectiveEdit)}" };
+                chip.Click += (_, _) => { Current.SelectedCandidate = index; Store.Save(Current); Editor(); };
+                versions.Children.Add(chip);
+            }
+            Body.Children.Add(versions);
+        }
 
         var sliders = new List<Slider>();
         var hues = original.Hues.Where(h => !h.Value.IsNeutral).ToDictionary(h => h.Key, h => h.Value);
@@ -731,18 +750,18 @@ public partial class MainWindow : Window
         collect = BuildEdit;
 
         Body.Children.Add(Row(
-            AsyncBtn("בנה מועמד מהעריכה", "בונה פרופיל…", async () =>
+            AsyncBtn("שמור כגרסה מעודכנת", "שומר גרסה…", async () =>
             {
                 var edit = BuildEdit();
                 var (whiteMode, whiteStrength) = readPaper();
                 bool same = EditKey(edit) == EditKey(original) && whiteMode == candidate.WhiteProtectionMode && Math.Abs(whiteStrength - candidate.WhiteProtectionStrength) < .01;
-                if (same) throw new InvalidOperationException("לא שינית אף ערך מאז המועמד הנוכחי.");
+                if (same) throw new InvalidOperationException("לא שינית אף ערך מאז הגרסה הנוכחית.");
                 if (Current.Candidates.Count >= MaxCandidates) throw new InvalidOperationException("הגעת לשמונה מועמדים. בחר את הטוב ביותר או התחל מדידה חדשה.");
                 scan ??= ScanAnalyzer.Analyze(Current.ScanPath);
                 Current.WhiteProtectionMode = whiteMode; Current.WhiteProtectionStrength = whiteStrength; Store.Save(Current);
                 await ProfileBuilder.BuildAsync(Current, scan, candidate.Feedback, whiteMode, whiteStrength, edit);
-                Review(); Info($"מועמד {Current.Candidates[Current.SelectedCandidate].Number} נבנה מהעריכה.");
-            }, Kind.Primary, "בונה מועמד חדש מהסריקה המקורית, עם תיקוני המשוב של מועמד זה והערכים שבחרת"),
+                Review(); Info($"נשמרה גרסה {Current.Candidates[Current.SelectedCandidate].Number}. לבדיקה הדפס דרכה, ואם היא טובה בחר \"נראה טוב\" להתקנה.");
+            }, Kind.Primary, "בונה פרופיל ICC חדש מהסריקה המקורית עם הערכים שבחרת, ושומר אותו כגרסה נוספת"),
             Btn("אפס הכול", () =>
             {
                 loading = true;
@@ -752,8 +771,8 @@ public partial class MainWindow : Window
                 loading = false;
                 SelectBand(selectedBand); Changed();
             }),
-            Btn("חזרה למועמד", Review, Kind.Ghost)));
-        Body.Children.Add(Muted($"נשמרו {Current.Candidates.Count} מתוך {MaxCandidates} מועמדים אפשריים. לחיצה כפולה על פס מאפסת אותו."));
+            Btn("חזרה בלי לשמור", Review, Kind.Ghost)));
+        Body.Children.Add(Muted($"נשמרו {Current.Candidates.Count} מתוך {MaxCandidates} גרסאות אפשריות. לחיצה כפולה על פס מאפסת אותו."));
 
         SelectBand(selectedBand);
         loading = false;
